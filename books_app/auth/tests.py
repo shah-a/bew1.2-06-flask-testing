@@ -1,14 +1,16 @@
-import os
 from unittest import TestCase
-
 from datetime import date
- 
 from books_app import app, db, bcrypt
-from books_app.models import Book, Author, User, Audience
+from books_app.models import Book, Author, User
 
 """
-Run these tests with the command:
-python -m unittest books_app.main.tests
+How to run auth tests:
+python -m unittest books_app.auth.tests
+
+How to run all tests:
+python -m unittest discover (or just:
+python -m unittest; the two are equivalent:
+https://docs.python.org/3/library/unittest.html#test-discovery)
 """
 
 #################################################
@@ -53,7 +55,6 @@ class AuthTests(TestCase):
         db.create_all()
 
     def test_signup(self):
-        # TODO: Write a test for the signup route. It should:
         # - Make a POST request to /signup, sending a username & password
         post_data = {
             'username': 'newuser',
@@ -70,7 +71,6 @@ class AuthTests(TestCase):
         self.assertTrue(bcrypt.check_password_hash(created_user.password, 'newpass'))
 
     def test_signup_existing_user(self):
-        # TODO: Write a test for the signup route. It should:
         # - Create a user
         create_user()
 
@@ -87,7 +87,6 @@ class AuthTests(TestCase):
         self.assertIn('That username is taken. Please choose a different one.', response_text)
 
     def test_login_correct_password(self):
-        # TODO: Write a test for the login route. It should:
         # - Create a user
         create_user()
 
@@ -105,7 +104,6 @@ class AuthTests(TestCase):
         self.assertNotIn('Log In', response_text)
 
     def test_login_nonexistent_user(self):
-        # TODO: Write a test for the login route. It should:
         # - Make a POST request to /login, sending a username & password
         post_data = {
             'username': 'asdfasdf',
@@ -120,7 +118,6 @@ class AuthTests(TestCase):
         self.assertIn('No user with that username. Please try again.', response_text)
 
     def test_login_incorrect_password(self):
-        # TODO: Write a test for the login route. It should:
         # - Create a user
         create_user()
 
@@ -139,7 +136,6 @@ class AuthTests(TestCase):
         self.assertIn('Password doesn&#39;t match. Please try again.', response_text)
 
     def test_logout(self):
-        # TODO: Write a test for the logout route. It should:
         # - Create a user
         create_user()
 
